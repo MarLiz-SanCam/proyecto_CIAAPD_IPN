@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:proyecto_app_asistencia_ipn/Colors/ColorVino.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:proyecto_app_asistencia_ipn/Pages/LogInPage.dart';
+import 'package:proyecto_app_asistencia_ipn/Pages/LogInPresenciales.dart';
+import 'package:proyecto_app_asistencia_ipn/Pages/LogInDistancia.dart';
 // --------------------------  Fin de los 'import' -------------------------- //
 
 // Página principal de la aplicación.
@@ -129,81 +130,100 @@ class HomePage extends StatelessWidget{
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                MaterialButton(
+                  MaterialButton(
                     child: const Text(
-                      'Iniciar Sesión',
+                      'Iniciar Sesión\nPresencial',
                       style: TextStyle(
                         color: Colors.white,
                           //fontFamily: 'PTSerif',
                           fontWeight: FontWeight.bold,
-                          fontSize: 15.0,
+                          fontSize: 20.0,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                     color: ColorVino.vino,
                     elevation: 0,
+                    height: 60.0,
+                    minWidth: 170.0,
                     splashColor: Colors.transparent,
                     onPressed: () async {
-                      /* Cuando el botón se presiona porprimera vez,
+                      /* Este botón no pide acceso a la ubicación
+                      *  ingresa al sistema de inicio de sesión
+                      * de versión en línea. */
+                      Navigator.push( //Navega a la siguiente página.
+                        context,
+                        MaterialPageRoute(builder: (context) => LogInEnPresencial(title: "IPN")),
+                      );
+                    }
+                ),
+                  SizedBox(
+                    height: 35.0,
+                  ),
+                  MaterialButton(
+                      child: const Text(
+                        'Iniciar Sesión\nA Distancia',
+                        style: TextStyle(
+                          color: Colors.white,
+                          //fontFamily: 'PTSerif',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      color: ColorVino.vino,
+                      elevation: 0,
+                      height: 60.0,
+                      minWidth: 170.0,
+                      splashColor: Colors.transparent,
+                      onPressed: () async {
+                        /* Cuando el botón se presiona porprimera vez,
                        * muestra por pantalla la alerta que pide permiso para
                        * acceder a la ubicación (sig línea de código) [...] */
-                      final status = await Permission.location.request();
-                      if(status == PermissionStatus.granted){
-                        /* [...] Si el permiso se concede, navegará  a la
+                        final status = await Permission.location.request();
+                        if(status == PermissionStatus.granted){
+                          /* [...] Si el permiso se concede, navegará  a la
                          * pantalla de inicio de sesión, permitiendo al
                          * usuario ingresar sus datos */
-                        Navigator.push( //Navega a la siguiente página.
-                          context,
-                          MaterialPageRoute(builder: (context) => LogInPage(title: "IPN")),
-                        );
-                      }else{
-                        showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (context) =>AlertDialog(
-                            title: const Text('Se requiere el acceso a la ubicación'),
-                            content: Text('Para continuar con el inicio de sesión, la aplicación requiere acceso a la ubicación del dispositivo, cambie la configuración correspondiente.'),
-                            actions: <Widget>[
-                              TextButton(
-                                /* si se selecciona este botón, enviará a las configuraciones
+                          Navigator.push( //Navega a la siguiente página.
+                            context,
+                            MaterialPageRoute(builder: (context) => LogInADistancia(title: 'IPN',)),
+                          );
+                        }else{
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) =>AlertDialog(
+                              title: const Text('Se requiere el acceso a la ubicación'),
+                              content: Text('Para continuar con el inicio de sesión, la aplicación requiere acceso a la ubicación del dispositivo, cambie la configuración correspondiente.'),
+                              actions: <Widget>[
+                                TextButton(
+                                  /* si se selecciona este botón, enviará a las configuraciones
                                  * del dispositivo para que el usuario dé el accesso a la
                                  * ubicación de forma manual */
-                                  child: const Text('Aceptar'),
-                                  onPressed: (){
-                                    openAppSettings();
-                                  }
-                              ),
-                              TextButton(
-                                //Si se selecciona este botón, la aplicación se cerrará
-                                child: const Text('Cancelar'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  SystemNavigator.pop();
-                                },
-                               ),
-                            ],
-                          ),
-                        );
-                        /*
+                                    child: const Text('Aceptar'),
+                                    onPressed: (){
+                                      openAppSettings();
+                                    }
+                                ),
+                                TextButton(
+                                  //Si se selecciona este botón, la aplicación se cerrará
+                                  child: const Text('Cancelar'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    SystemNavigator.pop();
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                          /*
                          Enviar Alerta de que no se pudo Acceder a la
                          ubicación, si en la alerta, se acepta el
                          uso de la ubicación, enviará al ususario a la config
                          para que permita el acceso a la ubicación manualmente
                          */
+                        }
                       }
-                    }
-                ),
-                  SizedBox(
-                    height: 25.0,
-                  ),
-                  const Text(
-                    'Se requiere acceso a la ubicación del dispositivo para acceder',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'PTSerif',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15.0,
-                      color: Colors.black,
-                    ),
                   ),
                 ],
               ),

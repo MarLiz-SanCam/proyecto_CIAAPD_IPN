@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:proyecto_app_asistencia_ipn/Colors/ColorVino.dart';
 import 'package:proyecto_app_asistencia_ipn/Pages/OpenSesion.dart';
-class LogInWithKey extends StatefulWidget{
-  const LogInWithKey({Key? key, required this.title}) : super(key: key);
+class LogInADistancia extends StatefulWidget{
+  const LogInADistancia({Key? key, required this.title}) : super(key: key);
   final String title;
   @override
-  State<LogInWithKey> createState() => _LogInWithKeyState();
+  State<LogInADistancia> createState() => _LogInADistanciaState();
 }
 
-class _LogInWithKeyState extends State<LogInWithKey> {
+class _LogInADistanciaState extends State<LogInADistancia> {
   bool isButtonActive = false;
   String asignedKey = "A1B-2C3"; /*TODO: Esta variable va a bajar del servidor
   (El valor asignado para la prueba debe ser modificado) y se le
@@ -64,7 +64,7 @@ class _LogInWithKeyState extends State<LogInWithKey> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      //backgroundColor: Colors.black12,
       appBar: AppBar( //Barra de la aplicación
         centerTitle: true, //Centra el título de la barra de la aplicación
         title: Text(
@@ -96,73 +96,6 @@ class _LogInWithKeyState extends State<LogInWithKey> {
                 ),
                 SizedBox(
                   height: 25.0,
-                ),
-                Text(
-                  'Ingrese clave asignada.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'Roboto',
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(
-                  height: 100.0,
-                ),
-                Container(
-                  //color: ColorVino.vino,
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Column(
-                    //crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Container(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          "Clave: ",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15.0,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15.0,
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        color: Colors.white,
-                        height: 40.0,
-                        //width: 200.0,
-                        child: TextFormField(
-                          cursorColor: ColorVino.vino,
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                          maxLength: keyLen,
-                          controller: keyController,
-                          //print("El usuario escribió: ");
-                          //obscureText: true,
-                        ),
-
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                    ],
-                  ),
-                ),
-                Text(
-                  'Solicite su clave dinámica de acceso en la oficina correspondiente.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'Roboto',
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.bold,
-                  ),
                 ),
                 SizedBox(
                   height: 120.0,
@@ -224,6 +157,16 @@ class _LogInWithKeyState extends State<LogInWithKey> {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: BottomAppBar( //Barra del fodo de la app
+        child: Text(
+          'Author: MarLiz Santini',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: ColorVino.vino[50],
+          ),
+        ),
+        color: ColorVino.vino,
       ),
     );
   }

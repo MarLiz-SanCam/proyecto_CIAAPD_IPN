@@ -6,18 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:proyecto_app_asistencia_ipn/Colors/ColorVino.dart';
-import 'package:proyecto_app_asistencia_ipn/Pages/LogInWithKey.dart';
 import 'package:proyecto_app_asistencia_ipn/Pages/OpenSesion.dart';
 
-class LogInPage extends StatefulWidget{
-  const LogInPage({Key? key, required this.title}) : super(key: key);
+class LogInEnPresencial extends StatefulWidget{
+  const LogInEnPresencial({Key? key, required this.title}) : super(key: key);
   final String title;
   @override
-  State<LogInPage> createState() => _LogInPageState();
+  State<LogInEnPresencial> createState() => _LogInEnPresencialState();
 }
 
 
-class _LogInPageState extends State<LogInPage> {
+class _LogInEnPresencialState extends State<LogInEnPresencial> {
   File? credencial; //Archivo de la imagen de la credencial tomada o seleccionada
   File? location;
   bool isButtonActive = false;
@@ -292,29 +291,7 @@ class _LogInPageState extends State<LogInPage> {
                           cursorColor: ColorVino.vino,
                         ),
                       ),
-                      Container(
-                        //transformAlignment: Alignment.topRight,
-                        child: TextButton(
-                            child: const Text(
-                              "ó inicie sesión con clave proporcionada",
-                              textAlign: TextAlign.right,
-                            ),
-                            style: TextButton.styleFrom(
 
-                              textStyle: const TextStyle(
-                                fontSize: 15,
-                                fontFamily: 'Roboto',
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            onPressed: (){
-                              Navigator.push( //Navega a la siguiente página.
-                                context,
-                                MaterialPageRoute(builder: (context) => LogInWithKey(title: 'IPN',)),
-                              );
-                            }
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -372,6 +349,16 @@ class _LogInPageState extends State<LogInPage> {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: BottomAppBar( //Barra del fodo de la app
+        child: Text(
+          'Author: MarLiz Santini',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: ColorVino.vino[50],
+          ),
+        ),
+        color: ColorVino.vino,
       ),
     );
   }

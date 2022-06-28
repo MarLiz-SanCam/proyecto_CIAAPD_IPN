@@ -80,7 +80,11 @@ class _OpenSesionState extends State<OpenSesion> {
       ),
       body: ListView(
         children: <Widget>[
+          SizedBox(
+            height: 15,
+          ),
           Container(
+            color: Colors.black12,
             alignment: Alignment.center,
             padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 40),
             //color: Colors.yellow,
@@ -94,82 +98,101 @@ class _OpenSesionState extends State<OpenSesion> {
                   height: 125.0,
                   alignment: Alignment.center,
                 ),
-                SizedBox(height: 100.0,
+                SizedBox(height: 5.0,
                 ),
                 Container(
-                  //color: ColorVino.vino,
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Column(
-                    //crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Container(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          "Tiempo de horas activas de la sesión: ",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 17.0,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      Container(
-                        alignment: Alignment.center,
-                        //color: Colors.black87,
-                        height: 100.0,
-                        //width: 200.0,
-                        child: Text(
-                          //"00:00:00:00",
-                          formatearTiempo(),
-                          style: TextStyle(fontSize: 55, fontFamily: "RobotoSlab"),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 125.0,
-                      ),
-                    ],
+                  child: Text("Instituto Politécnico Nacional",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: ColorVino.vino,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 17.0,
+                    ),
                   ),
                 ),
+                SizedBox(height: 10.0,
+                ),
 
-                Container(
-                    child:
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        ElevatedButton(
-                          //style: style,
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(ColorVino.vino),
-                          ),
-                          onPressed: () {
-                            /* Cierra la sesión y sale de la app */
-                            //print(" Botón presionado :) Confirmado");
-                            detenerTimer();
-                            this.milisegundos = 0;
-                            setState(() {});
-                            Navigator.of(context).pop();
-                            SystemNavigator.pop();
-                          },
-                          child: const Text('Cerrar sesión',
-                            style: TextStyle(
-                              fontSize: 18.0,
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
+                SizedBox(height: 100.0,
                 ),
               ],
             ),
           ),
+          SizedBox(
+            height: 50,
+          ),
+          Container(
+              child:
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: 40,
+                    width: 135,
+                    child: ElevatedButton(
+                      //style: style,
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(ColorVino.vino),
+                        //maximumSize: Size(10.0,400.0)
+                        //minimumSize: Size(10.0, 100.0.),
+                      ),
+                      onPressed: () {
+                        /* Cierra la sesión y sale de la app */
+                        //print(" Botón presionado :) Confirmado");
+                        detenerTimer();
+                        this.milisegundos = 0;
+                        setState(() {});
+                        Navigator.of(context).pop();
+                        SystemNavigator.pop();
+                      },
+                      child: const Text('Descargar',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    child: ElevatedButton(
+                      //style: style,
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(ColorVino.vino),
+                      ),
+                      onPressed: () {
+                        //Agregar confirmación de cierre de sesión. AlertDialog
+                        /* Cierra la sesión y sale de la app */
+                        //print(" Botón presionado :) Confirmado");
+                        detenerTimer();
+                        this.milisegundos = 0;
+                        setState(() {});
+                        Navigator.of(context).pop();
+                        SystemNavigator.pop();
+                      },
+                      child: const Text('Salir',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                        ),
+                      ),
+                    ),
+                    width: 135,
+                    height: 40,
+                  )
+                ],
+              )
+          ),
         ],
+      ),
+      bottomNavigationBar: BottomAppBar( //Barra del fodo de la app
+        child: Text(
+          'Author: MarLiz Santini',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: ColorVino.vino[50],
+          ),
+        ),
+        color: ColorVino.vino,
       ),
     );
   }
