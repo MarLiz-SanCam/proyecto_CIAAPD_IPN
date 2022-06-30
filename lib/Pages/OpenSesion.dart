@@ -1,5 +1,5 @@
 
-import 'dart:async';
+//import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:proyecto_app_asistencia_ipn/Colors/ColorVino.dart';
@@ -12,53 +12,9 @@ class OpenSesion extends StatefulWidget {
 }
 
 class _OpenSesionState extends State<OpenSesion> {
-  int milisegundos = 0;
-  late Timer timer;
-  String timeActive = " "; //guarda en una cadena de texto el tiempo de actividad de la sesión en horas.
-  bool isRunning = false;
 
-  // INICIAR CRONOMETRO
-  void iniciarTimer(BuildContext context){
-    if(!isRunning){
-      timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
-        this.milisegundos += 100;
-        setState(() { });
-      });
-      isRunning = true;
-    }
-  }
-  // DETENER CRONÓMETRO
-  void detenerTimer(){
-    timeActive = formatearTiempo();
-    timer.cancel();
-    print("TIEMPO FINAL DE SESIÓN ACTIVA: $timeActive");
-    isRunning = false;
-  }
-
-  //INICIA EL CRONOMETRO EN CUANTO ENTRA A LA PÁGINA
-  void initState() {
-    super.initState(); WidgetsBinding.instance!.addPostFrameCallback((_) => iniciarTimer(context));
-  }
-
-  //DA TODO EL FORMATO REQUERIDO DE TIEMPO
-  String formatearTiempo(){
-    Duration duracion = Duration(milliseconds: this.milisegundos);
-    String twoDigits(int valor){
-      return valor >= 10 ? "$valor" : "0$valor";
-    }
-    String horas = twoDigits(duracion.inHours);
-    String minutos = twoDigits(duracion.inMinutes.remainder(60));
-    String segundos = twoDigits(duracion.inSeconds.remainder(60));
-    //String milisegundos = twoDigits(duracion.inMilliseconds.remainder(1000));
-    if(duracion.inHours >= 10){
-      detenerTimer();
-      print("El tiempo de actividad superó el límite permitido");
-    }
-    return "$horas:$minutos:$segundos";
-  }
   @override
   void dispose() {
-    timer.cancel();
     super.dispose();
   }
 
@@ -139,13 +95,8 @@ class _OpenSesionState extends State<OpenSesion> {
                         //minimumSize: Size(10.0, 100.0.),
                       ),
                       onPressed: () {
-                        /* Cierra la sesión y sale de la app */
+                        /*Guardar la imagen en el telefono*/
                         //print(" Botón presionado :) Confirmado");
-                        detenerTimer();
-                        this.milisegundos = 0;
-                        setState(() {});
-                        Navigator.of(context).pop();
-                        SystemNavigator.pop();
                       },
                       child: const Text('Descargar',
                         style: TextStyle(
@@ -163,11 +114,7 @@ class _OpenSesionState extends State<OpenSesion> {
                       onPressed: () {
                         //Agregar confirmación de cierre de sesión. AlertDialog
                         /* Cierra la sesión y sale de la app */
-                        //print(" Botón presionado :) Confirmado");
-                        detenerTimer();
-                        this.milisegundos = 0;
-                        setState(() {});
-                        Navigator.of(context).pop();
+
                         SystemNavigator.pop();
                       },
                       child: const Text('Salir',

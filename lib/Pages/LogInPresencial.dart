@@ -22,6 +22,12 @@ class _LogInEnPresencialState extends State<LogInEnPresencial> {
   bool isButtonActive = false;
   bool ThereIsCred = false;
   bool ThereIsLocation = false;
+  String asignedKey = "SACM010710"; /*TODO: Esta variable va a bajar del servidor
+  (El valor asignado para la prueba debe ser modificado) y se le
+  va a indicar al usuario, después de va a comparar con la clave ingresada por
+  el usuario y si coincide, se abre la sesión*/
+  int keyLen = 10;
+  String keyInput = "";
   // ------------------- Función para seleccionar la imagen de la galería
   Future selectFromGallery() async{
     try{
@@ -65,43 +71,45 @@ class _LogInEnPresencialState extends State<LogInEnPresencial> {
     }
   }
   // ----------------------- Controller ----------------------- //
-  late TextEditingController controller;
+  late TextEditingController UserController;
   @override
   void initState(){
     super.initState();
-    controller = TextEditingController();
-    controller.addListener(() {
-      final ThereIsText = controller.text.isNotEmpty;
-      print("there is text == $ThereIsText");
-      print("there is cred == $ThereIsCred");
-      print("there is locat == $ThereIsLocation");
-      setState(() {
-        if(ThereIsCred == true && ThereIsLocation == true && ThereIsText == true){
-          this.isButtonActive = true;
-        }else{
-          print("Falta llenar algún campo");
-        }
-      });
+    UserController = TextEditingController();
+    UserController.addListener(() {
+      final ThereIsText = UserController.text.isNotEmpty;
+      setState(() => isButtonActive = ThereIsText);
     });
   }
   @override
   void dispose(){
-    controller.dispose();
+    UserController.dispose();
     super.dispose();
   }
   // ----------------------- FinControll ----------------------- //
-  int milisegundos = 0;
-  late Timer timer;
-  late String timeActive; //guarda en una cadena de texto el tiempo de actividad de la sesión en horas.
-  bool isRunning = false;
-  void iniciarTimer(){
-    if(!isRunning){
-      timer = Timer.periodic(Duration(microseconds: 100), (timer) {
-        this.milisegundos += 100;
-        setState(() { });
-      });
-      isRunning = true;
-    }
+  savingKey(){
+    keyInput = UserController.text;
+    print(" La clave ingresada es: $keyInput");
+  }
+  failedKeyMessage() {
+    showDialog(
+        context: context,
+        builder: (context){
+          return AlertDialog(
+            title: Text("Clave incorrecta"),
+            content: Text("La clave ingresada es incorrecta, intente de nuevo."),
+            actions: <Widget>[
+              TextButton(
+                //Si se selecciona este botón, la aplicación se cerrará
+                child: const Text('Aceptar'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        }
+    );
   }
   @override
   Widget build(BuildContext context) {
@@ -161,6 +169,35 @@ class _LogInEnPresencialState extends State<LogInEnPresencial> {
                       Container(
                         alignment: Alignment.topLeft,
                         child: Text(
+                          "Usuario. ",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15.0,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        color: Colors.black12,
+                        height: 35.0,
+                        //width: 200.0,
+                        child: TextFormField(
+                          controller: UserController,
+                          cursorColor: ColorVino.vino,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 40.0,
+                      ),
+                      Container(
+                        alignment: Alignment.topLeft,
+                        child: Text(
                           "Imagen de la credencial. ",
                           textAlign: TextAlign.left,
                           style: TextStyle(
@@ -175,7 +212,7 @@ class _LogInEnPresencialState extends State<LogInEnPresencial> {
                         height: 5.0,
                       ),
                       Container(
-                        alignment: Alignment.topLeft,
+                        alignment: Alignment.center,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -222,7 +259,7 @@ class _LogInEnPresencialState extends State<LogInEnPresencial> {
                         ),
                       ),
                       SizedBox(
-                        height: 20.0,
+                        height: 40.0,
                       ),
                       Container(
                         alignment: Alignment.topLeft,
@@ -241,7 +278,7 @@ class _LogInEnPresencialState extends State<LogInEnPresencial> {
                         height: 5.0,
                       ),
                       Container(
-                        alignment: Alignment.topLeft,
+                        alignment: Alignment.center,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -259,44 +296,11 @@ class _LogInEnPresencialState extends State<LogInEnPresencial> {
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Container(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          "Nombre Completo. ",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15.0,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        color: Colors.black12,
-                        height: 35.0,
-                        //width: 200.0,
-                        child: TextFormField(
-                          /*decoration: InputDecoration(
-                        label: Text("Nombre"),
-                      ),*/
-                          controller: controller,
-                          cursorColor: ColorVino.vino,
-                        ),
-                      ),
-
                     ],
                   ),
                 ),
                 SizedBox(
-                  height: 30.0,
+                  height: 60.0,
                 ),
                 Container(
                   child: Row(
@@ -308,6 +312,7 @@ class _LogInEnPresencialState extends State<LogInEnPresencial> {
                           backgroundColor: MaterialStateProperty.all<Color>(ColorVino.vino),
                         ),
                         onPressed: () {
+                          //Si se cancela el inicio de sesión, se cierra la aplicación
                           print(" Botón presionado :O Inicio de sesión cancelado");
                           Navigator.of(context).pop();
                           SystemNavigator.pop();
@@ -319,24 +324,30 @@ class _LogInEnPresencialState extends State<LogInEnPresencial> {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        width: 50,
+                      ),
                       ElevatedButton(
-                        /* Este botón estará activo si y sólo sí, las dos imágenes
-                         * y el campo del nombre están completos (y el nombre coincide con la base de datos)*/
+                        //style: style,
                         style: ElevatedButton.styleFrom(
                           primary: ColorVino.vino,
                           onSurface: ColorVino.vino[500],
                         ),
                         onPressed: isButtonActive
                             ? () {
-                          print(" Botón presionado:)  se inicia sesión...");
-                          Navigator.push( //Navega a la siguiente página.
-                            context,
-                            MaterialPageRoute(builder: (context) => OpenSesion())
-                          );
+                          savingKey();
+                          if(keyInput == asignedKey){
+                            print(" Botón presionado:)  se inicia sesión...");
+                            Navigator.push( //Navega a la siguiente página.
+                              context,
+                              MaterialPageRoute(builder: (context) => OpenSesion()),
+                            );
+                          }else failedKeyMessage();
+
                         }
                             : null,
                         //onPressed: null,
-                        child: const Text('Confirmar',
+                        child: const Text('Verificar',
                           style: TextStyle(
                             fontSize: 18.0,
                           ),
@@ -350,16 +361,7 @@ class _LogInEnPresencialState extends State<LogInEnPresencial> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomAppBar( //Barra del fodo de la app
-        child: Text(
-          'Author: MarLiz Santini',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: ColorVino.vino[50],
-          ),
-        ),
-        color: ColorVino.vino,
-      ),
+
     );
   }
 

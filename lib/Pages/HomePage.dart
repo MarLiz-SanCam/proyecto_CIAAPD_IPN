@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:proyecto_app_asistencia_ipn/Colors/ColorVino.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:proyecto_app_asistencia_ipn/Pages/LogInPresenciales.dart';
+import 'package:proyecto_app_asistencia_ipn/Pages/LogInPresencial.dart';
 import 'package:proyecto_app_asistencia_ipn/Pages/LogInDistancia.dart';
 // --------------------------  Fin de los 'import' -------------------------- //
 
