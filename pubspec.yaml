@@ -28,6 +28,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   image_picker: ^0.8.4+1 # Tomar Fotografías
   permission_handler:  #Administrador de Permisos (para la ubicación)
+  firebase_core: ^1.19.1
+  firebase_database: ^9.0.18
 
 dev_dependencies:
   flutter_test:
