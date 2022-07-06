@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "613725236657",
+    "project_id": "ciaapd-ipn-system",
+    "storage_bucket": "ciaapd-ipn-system.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:613725236657:android:df71ce4bead2c0bf6be190",
+        "android_client_info": {
+          "package_name": "edu.proyecto_app_asistencia_ipn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "613725236657-dhc38ndursdotu1fpj9c0uujp6r72hl0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDDt468UPtAAj2V-lA4CpyFfymmWqINdk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "613725236657-dhc38ndursdotu1fpj9c0uujp6r72hl0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
