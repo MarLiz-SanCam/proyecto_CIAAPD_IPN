@@ -196,7 +196,7 @@ class SignUpScreen extends StatelessWidget{
                           }
                         },
                       ),
-                      TextFormField}( //Todo validador del nombre
+                      TextFormField( //Todo validador del nombre
                         cursorColor: ColorVino.vino,
                         decoration: const InputDecoration(
                           labelText: 'Confirmar Correo electrónico',
