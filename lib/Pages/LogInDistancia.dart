@@ -50,25 +50,25 @@ class _LogInADistanciaState extends State<LogInADistancia> {
     }
   }
   // ----------------------- Controller ----------------------- //cl
-  late TextEditingController UserController;
+  late TextEditingController UserKeyController;
   @override
   void initState(){
     super.initState();
-    UserController = TextEditingController();
-    UserController.addListener(() {
-      final ThereIsText = UserController.text.isNotEmpty;
+    UserKeyController = TextEditingController();
+    UserKeyController.addListener(() {
+      final ThereIsText = UserKeyController.text.isNotEmpty;
       setState(() => isButtonActive = ThereIsText);
     });
   }
   @override
   void dispose(){
-    UserController.dispose();
+    UserKeyController.dispose();
     super.dispose();
   }
   // ----------------------- FinControl ----------------------- //
   //bool isKeyValid( String validKey) => validKey.length == keyLen;
   savingKey(){
-    keyInput = UserController.text;
+    keyInput = UserKeyController.text;
     print(" La clave ingresada es: $keyInput");
   }
   failedKeyMessage() {
@@ -162,7 +162,7 @@ class _LogInADistanciaState extends State<LogInADistancia> {
                   height: 35.0,
                   //width: 200.0,
                   child: TextFormField(
-                    controller: UserController,
+                    controller: UserKeyController,
                     cursorColor: ColorVino.vino,
                   ),
                 ),

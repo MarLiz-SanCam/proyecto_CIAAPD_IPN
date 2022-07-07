@@ -178,7 +178,7 @@ class HomePage extends StatelessWidget{
                           //TODO Mandaar a La página SignUpScreen
                           Navigator.push( //Navega a la siguiente página.
                             context,
-                            MaterialPageRoute(builder: (context) => SignUpScreen()),
+                            MaterialPageRoute(builder: (context) => SignUpScreen(title: 'IPN',)),
                           );
                           /* Cuando el botón se presiona porprimera vez,
                        * muestra por pantalla la alerta que pide permiso para

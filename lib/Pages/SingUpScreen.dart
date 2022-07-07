@@ -1,13 +1,54 @@
 
 //import 'package:flutter/cupertino.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:proyecto_app_asistencia_ipn/Colors/ColorVino.dart';
 
 // --------------------------  Fin de los 'import' -------------------------- //
 
-// Página principal de la aplicación.
-class SignUpScreen extends StatelessWidget{
+
+class SignUpScreen extends StatefulWidget{
+  const SignUpScreen({Key? key, required this.title}) : super(key: key);
+  final String title;
+  @override
+  State<SignUpScreen> createState() => _SignUpScreen();
+}
+class _SignUpScreen extends State<SignUpScreen>{
+  //VARIABLES
+  File? credencial; //Archivo de la imagen de la credencial tomada o seleccionada
+  bool ThereIsCred = false;
+  // fin variables
+  // FUNCIONES //
+  Future picWithCamera() async{
+    try{
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+      if(image == null ) return;
+      final imageTemp = File(image.path);
+      setState(() {
+        this.credencial = imageTemp;
+        this.ThereIsCred = true;
+      });
+    } on PlatformException catch(e){
+      print('Failed to pick image: $e');
+    }
+  }
+  Future selectFromGallery() async{
+    try{
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if(image == null ) return;
+      final imageTemp = File(image.path);
+      setState(() {
+        this.credencial = imageTemp;
+        this.ThereIsCred = true;
+      });
+    } on PlatformException catch(e){
+      print('Failed to pick image: $e');
+    }
+  }
+  //Fin Funciones
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build (BuildContext context) {
@@ -102,7 +143,7 @@ class SignUpScreen extends StatelessWidget{
                           fontSize: 15.0,
                         ),
                       ),
-                      TextFormField( //Todo validador del nombre
+                      TextFormField( //Todo: Agregar TextEditingController
                         cursorColor: ColorVino.vino,
                         decoration: const InputDecoration(
                           labelText: 'Apellido Paterno',
@@ -113,7 +154,7 @@ class SignUpScreen extends StatelessWidget{
                           }
                         },
                       ),
-                      TextFormField( //Todo validador del nombre
+                      TextFormField( //Todo: Agregar TextEditingController
                         cursorColor: ColorVino.vino,
                         decoration: const InputDecoration(
                           labelText: 'Apellido Materno',
@@ -137,7 +178,7 @@ class SignUpScreen extends StatelessWidget{
                           fontSize: 15.0,
                         ),
                       ),
-                      TextFormField( //Todo validador del nombre
+                      TextFormField( //Todo: Agregar TextEditingController
                         cursorColor: ColorVino.vino,
                         decoration: const InputDecoration(
                           labelText: 'CURP',
@@ -161,7 +202,7 @@ class SignUpScreen extends StatelessWidget{
                           fontSize: 15.0,
                         ),
                       ),
-                      TextFormField( //Todo validador del nombre
+                      TextFormField( //Todo: Agregar TextEditingController
                         cursorColor: ColorVino.vino,
                         decoration: const InputDecoration(
                           labelText: 'RFC',
@@ -185,8 +226,7 @@ class SignUpScreen extends StatelessWidget{
                           fontSize: 15.0,
                         ),
                       ),
-                      TextFormField( /*Todo validar que los campos de correo
-                        tengan lo mismo*/
+                      TextFormField( /*Todo validar que los campos de correo tengan lo mismo*/
                         cursorColor: ColorVino.vino,
                         decoration: const InputDecoration(
                           labelText: 'Correo electrónico',
@@ -197,7 +237,7 @@ class SignUpScreen extends StatelessWidget{
                           }
                         },
                       ),
-                      TextFormField( //Todo validador del nombre
+                      TextFormField( //Todo: Agregar TextEditingController
                         cursorColor: ColorVino.vino,
                         decoration: const InputDecoration(
                           labelText: 'Confirmar Correo electrónico',
@@ -210,6 +250,92 @@ class SignUpScreen extends StatelessWidget{
                       ),
                       SizedBox(
                         height: 20,
+                      ),
+                      Text(
+                        "Número de Empleado",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15.0,
+                        ),
+                      ),
+                      TextFormField( //Todo: Agregar TextEditingController
+                        cursorColor: ColorVino.vino,
+                        decoration: const InputDecoration(
+                          labelText: 'No. Empleado',
+                        ),
+                        validator: (value){
+                          if(value!.isEmpty){
+                            return 'Ingrese el dato solicitado!';
+                          }
+                        },
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "Escuela ",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15.0,
+                        ),
+                      ),
+                      //Todo: Agregar seleccionador de escuela
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "Escuela ",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15.0,
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(ColorVino.vino),
+                        ),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            //barrierDismissible: false,
+                            builder: (context) =>AlertDialog(
+                              // Abrir la cámara o la galería
+                              title: const Text('Tomar fotografía o seleccionar imagen.'),
+                              content: Text('Selecciona una opción.'),
+                              actions: <Widget>[
+                                TextButton(
+                                  /* si se selecciona este botón, enviará a las configuraciones
+                                 * del dispositivo para que el usuario dé el accesso a la
+                                 * ubicación de forma manual */
+                                    child: const Text('Tomar Fotografía con la cámara'),
+                                    onPressed: (){
+                                      picWithCamera();
+                                      //llama a la función de tomar foto
+                                      Navigator.pop(context);
+                                    }
+                                ),
+                                TextButton(
+                                  //Si se selecciona este botón, la aplicación se cerrará
+                                  child: const Text('Seleccionar imagen de la galería'),
+                                  onPressed: () {
+                                    selectFromGallery();
+                                    Navigator.pop(context);//llama a la función de seleccionar de la galería
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        child: const Text('Tomar foto ó seleccionar archivo'),
                       ),
                     ],
                   ),
