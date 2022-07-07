@@ -185,7 +185,8 @@ class SignUpScreen extends StatelessWidget{
                           fontSize: 15.0,
                         ),
                       ),
-                      TextFormField( //Todo validador del nombre
+                      TextFormField( /*Todo validar que los campos de correo
+                        tengan lo mismo*/
                         cursorColor: ColorVino.vino,
                         decoration: const InputDecoration(
                           labelText: 'Correo electrónico',
