@@ -20,7 +20,7 @@ class _SignUpScreen extends State<SignUpScreen>{
   File? ImgPerfil;
   File? ImgQRCode;//Archivo de la imagen de la credencial tomada o seleccionada
   bool ThereIsProfImg = false;
-  var _lista = ['ESIME', 'ESCOM', 'ESIQUE']; //TODO: agregar todos los nombres de las escuelas
+  var _lista = ['ESIME Zacatenco', 'ESIME Ticomán', 'ESIME Azcapotzalco', 'ESIME Culhuacán']; //Lista con los nombres de las escuelas.
   String _vista = 'Seleccione la escuela ';
   // fin variables
 
@@ -398,7 +398,7 @@ class _SignUpScreen extends State<SignUpScreen>{
                         height: 20,
                       ),
                       Text(
-                        "Foto de Perfil ",
+                        "Código QR de la credencial ",
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           color: Colors.black,
@@ -434,14 +434,14 @@ class _SignUpScreen extends State<SignUpScreen>{
                                   TextButton(
                                       child: const Text('Tomar Fotografía con la cámara'),
                                       onPressed: (){
-                                        picWithCameraImgProfile();
+                                        picWithCameraQRcode();
                                         Navigator.pop(context);
                                       }
                                   ),
                                   TextButton(
                                     child: const Text('Seleccionar imagen de la galería'),
                                     onPressed: () {
-                                      selectFromGalleryImgProfile();
+                                      selectFromGalleryQRcode();
                                       Navigator.pop(context);//llama a la función de seleccionar de la galería
                                     },
                                   ),
