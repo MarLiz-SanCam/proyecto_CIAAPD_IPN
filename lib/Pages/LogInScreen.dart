@@ -8,7 +8,7 @@ import 'package:proyecto_app_asistencia_ipn/Pages/LogInDistancia.dart';
 // --------------------------  Fin de los 'import' -------------------------- //
 
 // Página principal de la aplicación.
-class HomePage extends StatelessWidget{
+class LogInScreen extends StatelessWidget{
   @override
   Widget build (BuildContext context) {
     return Scaffold(
@@ -34,85 +34,44 @@ class HomePage extends StatelessWidget{
                   alignment: Alignment.center,
                   child: Column(
                     children: <Widget>[
+                      SizedBox(
+                        height: 15.0,
+                      ),
                       Container(
                         transformAlignment: Alignment.center,
-                        child: Row( // Logos y nombre ESIME
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Image( //Logo IPN config
-                              image: AssetImage("images/LogoIPN_blanco.png"), //Imagen
-                              height: 80.0,
-                            ),
-                            Container( //Contenedor del texto (nombre de la escuela [ESIME])
-                              transformAlignment: Alignment.center,
-                              width: 207.0,
-                              child: Text(
-                                "Escuela Superior de Ingeniería Mecánica y Eléctrica",
-                                //Texto del contenedor (nombre de la escuela)
-                                style: TextStyle( //Configuración del estilo del texto
-                                    fontFamily: 'RobotoSlab',
-                                    color: Colors.white, //Color del texto
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.w100
-                                ),
-                                textAlign: TextAlign.center, //Alineación del texto
-                              ),
-                            ),
-                            Image( //Logo ESIME config
-                              image: AssetImage("images/logoesime.png"), //imagen
-                              height: 58.0, //Tamaño de imagen
-                            ),
-                          ],
+                        child: Image( //Logo IPN config
+                          image: AssetImage("images/LogoIPN_blanco.png"), //Imagen
+                          height: 80.0,
                         ),
                       ),
                       SizedBox(
                         height: 10.0,
                       ),
                       Text(
-                        " ACADEMIA DE FÍSICA ",
+                        " CIAAPD ",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.white,
-                            fontFamily: 'PTSerif',
-                            fontWeight: FontWeight.w200,
-                            fontSize: 15.0
+                            fontFamily: 'RobotoSlab',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 22.0
                         ),
                       ),
                       SizedBox(
-                        height: 5.0,
+                        height: 25.0,
                       ),
                       Text(
-                        " ICE ",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 17.0
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15.0,
-                      ),
-                      Text(
-                        " Control Interactivo Auxiliar de Asistencias del personal Docente ",
+                        " Seleccione la modalidad en la que será tomada su asistencia",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 17.0,
-                          fontFamily: 'PTSerif',
+                          fontSize: 19.0,
+                          fontFamily: 'roboto',
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                       SizedBox(
-                        height: 10.0,
-                      ),
-                      Text(
-                        " ( CAAPD )",
-                        style: TextStyle(
-                            color: Colors.white
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15.0,
+                        height: 20.0,
                       )
                     ],
                   ),
@@ -128,7 +87,8 @@ class HomePage extends StatelessWidget{
                 alignment: Alignment.center,
                 padding: EdgeInsets.symmetric(horizontal: 45.0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     MaterialButton(
                         child: const Text(
@@ -142,7 +102,8 @@ class HomePage extends StatelessWidget{
                           textAlign: TextAlign.center,
                         ),
                         color: ColorVino.vino,
-                        elevation: 0,
+                        shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(10.0) ),
+                        elevation: 5,
                         height: 60.0,
                         minWidth: 170.0,
                         splashColor: Colors.transparent,
@@ -157,7 +118,7 @@ class HomePage extends StatelessWidget{
                         }
                     ),
                     SizedBox(
-                      height: 35.0,
+                      height: 40.0,
                     ),
                     MaterialButton(
                         child: const Text(
@@ -171,7 +132,8 @@ class HomePage extends StatelessWidget{
                           textAlign: TextAlign.center,
                         ),
                         color: ColorVino.vino,
-                        elevation: 0,
+                        shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(10.0) ),
+                        elevation: 5,
                         height: 60.0,
                         minWidth: 170.0,
                         splashColor: Colors.transparent,

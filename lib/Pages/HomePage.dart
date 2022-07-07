@@ -1,10 +1,10 @@
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:proyecto_app_asistencia_ipn/Colors/ColorVino.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:proyecto_app_asistencia_ipn/Pages/LogInPresencial.dart';
 import 'package:proyecto_app_asistencia_ipn/Pages/LogInDistancia.dart';
+import 'package:proyecto_app_asistencia_ipn/Pages/LogInScreen.dart';
 // --------------------------  Fin de los 'import' -------------------------- //
 
 // Página principal de la aplicación.
@@ -86,8 +86,9 @@ class HomePage extends StatelessWidget{
                         " ICE ",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 17.0
+                          color: Colors.white,
+                          fontSize: 17.0,
+                          fontFamily: 'RobotoSlab',
                         ),
                       ),
                       SizedBox(
@@ -121,7 +122,7 @@ class HomePage extends StatelessWidget{
               ),
               //Caja de espaciado
               SizedBox(
-                height: 140.0,
+                height: 115.0,
               ),
               //Contenedor del cuerpo del programa
               Container(
@@ -132,7 +133,7 @@ class HomePage extends StatelessWidget{
                   children: [
                     MaterialButton(
                         child: const Text(
-                          'Iniciar Sesión\nPresencial',
+                          'Iniciar Sesión',
                           style: TextStyle(
                             color: Colors.white,
                             //fontFamily: 'PTSerif',
@@ -142,17 +143,16 @@ class HomePage extends StatelessWidget{
                           textAlign: TextAlign.center,
                         ),
                         color: ColorVino.vino,
-                        elevation: 0,
+                        shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(10.0) ),
+                        elevation: 5,
                         height: 60.0,
                         minWidth: 170.0,
                         splashColor: Colors.transparent,
                         onPressed: () async {
-                          /* Este botón no pide acceso a la ubicación
-                      *  ingresa al sistema de inicio de sesión
-                      * de versión en línea. */
+                          //TODO mandar a la página LogInScreen
                           Navigator.push( //Navega a la siguiente página.
                             context,
-                            MaterialPageRoute(builder: (context) => LogInEnPresencial(title: "IPN")),
+                            MaterialPageRoute(builder: (context) => LogInScreen()),
                           );
                         }
                     ),
@@ -161,7 +161,7 @@ class HomePage extends StatelessWidget{
                     ),
                     MaterialButton(
                         child: const Text(
-                          'Iniciar Sesión\nA Distancia',
+                          'Registrarse',
                           style: TextStyle(
                             color: Colors.white,
                             //fontFamily: 'PTSerif',
@@ -171,11 +171,17 @@ class HomePage extends StatelessWidget{
                           textAlign: TextAlign.center,
                         ),
                         color: ColorVino.vino,
-                        elevation: 0,
+                        shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(10.0) ),
+                        elevation: 5,
                         height: 60.0,
                         minWidth: 170.0,
                         splashColor: Colors.transparent,
                         onPressed: () async {
+                          //TODO Mandaar a La página SignUpScreen
+                          Navigator.push( //Navega a la siguiente página.
+                            context,
+                            MaterialPageRoute(builder: (context) => LogInADistancia(title: 'IPN',)),
+                          );
                           /* Cuando el botón se presiona porprimera vez,
                        * muestra por pantalla la alerta que pide permiso para
                        * acceder a la ubicación (sig línea de código) [...] */
@@ -184,38 +190,7 @@ class HomePage extends StatelessWidget{
                             /* [...] Si el permiso se concede, navegará  a la
                          * pantalla de inicio de sesión, permitiendo al
                          * usuario ingresar sus datos */
-                            Navigator.push( //Navega a la siguiente página.
-                              context,
-                              MaterialPageRoute(builder: (context) => LogInADistancia(title: 'IPN',)),
-                            );
-                          }else{
-                            showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (context) =>AlertDialog(
-                                title: const Text('Se requiere el acceso a la ubicación'),
-                                content: Text('Para continuar con el inicio de sesión, la aplicación requiere acceso a la ubicación del dispositivo, cambie la configuración correspondiente.'),
-                                actions: <Widget>[
-                                  TextButton(
-                                    /* si se selecciona este botón, enviará a las configuraciones
-                                 * del dispositivo para que el usuario dé el accesso a la
-                                 * ubicación de forma manual */
-                                      child: const Text('Aceptar'),
-                                      onPressed: (){
-                                        openAppSettings();
-                                      }
-                                  ),
-                                  TextButton(
-                                    //Si se selecciona este botón, la aplicación se cerrará
-                                    child: const Text('Cancelar'),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      SystemNavigator.pop();
-                                    },
-                                  ),
-                                ],
-                              ),
-                            );
+
                             /*
                          Enviar Alerta de que no se pudo Acceder a la
                          ubicación, si en la alerta, se acepta el
@@ -227,6 +202,21 @@ class HomePage extends StatelessWidget{
                     ),
                   ],
                 ),
+              ),
+              SizedBox(
+                height: 40.0,
+              ),
+              Container(
+                child: Text(
+                  "Nota: El REGISTRO deberá realizarse sólo la PRIMERA VEZ que se use la aplicación",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily:'Roboto',
+                    fontSize: 15,
+                  ),
+                ),
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(15.0),
               ),
             ],
           ),
