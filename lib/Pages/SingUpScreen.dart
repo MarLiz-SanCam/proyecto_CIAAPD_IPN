@@ -17,31 +17,62 @@ class SignUpScreen extends StatefulWidget{
 }
 class _SignUpScreen extends State<SignUpScreen>{
   //VARIABLES
-  File? credencial; //Archivo de la imagen de la credencial tomada o seleccionada
-  bool ThereIsCred = false;
+  File? ImgPerfil;
+  File? ImgQRCode;//Archivo de la imagen de la credencial tomada o seleccionada
+  bool ThereIsProfImg = false;
+  var _lista = ['ESIME', 'ESCOM', 'ESIQUE']; //TODO: agregar todos los nombres de las escuelas
+  String _vista = 'Seleccione la escuela ';
   // fin variables
+
+
   // FUNCIONES //
-  Future picWithCamera() async{
+  Future picWithCameraImgProfile() async{
     try{
       final image = await ImagePicker().pickImage(source: ImageSource.camera);
       if(image == null ) return;
       final imageTemp = File(image.path);
       setState(() {
-        this.credencial = imageTemp;
-        this.ThereIsCred = true;
+        this.ImgPerfil = imageTemp;
+        this.ThereIsProfImg = true;
       });
     } on PlatformException catch(e){
       print('Failed to pick image: $e');
     }
   }
-  Future selectFromGallery() async{
+  Future selectFromGalleryImgProfile() async{
     try{
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if(image == null ) return;
       final imageTemp = File(image.path);
       setState(() {
-        this.credencial = imageTemp;
-        this.ThereIsCred = true;
+        this.ImgPerfil = imageTemp;
+        this.ThereIsProfImg = true;
+      });
+    } on PlatformException catch(e){
+      print('Failed to pick image: $e');
+    }
+  }
+  Future picWithCameraQRcode() async{
+    try{
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+      if(image == null ) return;
+      final imageTemp = File(image.path);
+      setState(() {
+        this.ImgQRCode = imageTemp;
+        this.ThereIsProfImg = true;
+      });
+    } on PlatformException catch(e){
+      print('Failed to pick image: $e');
+    }
+  }
+  Future selectFromGalleryQRcode() async{
+    try{
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if(image == null ) return;
+      final imageTemp = File(image.path);
+      setState(() {
+        this.ImgQRCode = imageTemp;
+        this.ThereIsProfImg = true;
       });
     } on PlatformException catch(e){
       print('Failed to pick image: $e');
@@ -116,7 +147,7 @@ class _SignUpScreen extends State<SignUpScreen>{
                           color: Colors.black,
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
-                          fontSize: 15.0,
+                          fontSize: 18.0,
                         ),
                       ),
                       TextFormField( //Todo validador del nombre
@@ -140,7 +171,7 @@ class _SignUpScreen extends State<SignUpScreen>{
                           color: Colors.black,
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
-                          fontSize: 15.0,
+                          fontSize: 18.0,
                         ),
                       ),
                       TextFormField( //Todo: Agregar TextEditingController
@@ -175,7 +206,7 @@ class _SignUpScreen extends State<SignUpScreen>{
                           color: Colors.black,
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
-                          fontSize: 15.0,
+                          fontSize: 18.0,
                         ),
                       ),
                       TextFormField( //Todo: Agregar TextEditingController
@@ -199,7 +230,7 @@ class _SignUpScreen extends State<SignUpScreen>{
                           color: Colors.black,
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
-                          fontSize: 15.0,
+                          fontSize: 18.0,
                         ),
                       ),
                       TextFormField( //Todo: Agregar TextEditingController
@@ -223,7 +254,7 @@ class _SignUpScreen extends State<SignUpScreen>{
                           color: Colors.black,
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
-                          fontSize: 15.0,
+                          fontSize: 18.0,
                         ),
                       ),
                       TextFormField( /*Todo validar que los campos de correo tengan lo mismo*/
@@ -258,7 +289,7 @@ class _SignUpScreen extends State<SignUpScreen>{
                           color: Colors.black,
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
-                          fontSize: 15.0,
+                          fontSize: 18.0,
                         ),
                       ),
                       TextFormField( //Todo: Agregar TextEditingController
@@ -282,60 +313,144 @@ class _SignUpScreen extends State<SignUpScreen>{
                           color: Colors.black,
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
-                          fontSize: 15.0,
+                          fontSize: 18.0,
                         ),
                       ),
-                      //Todo: Agregar seleccionador de escuela
+                      DropdownButton(
+                          items: _lista.map((String a){
+                            return DropdownMenuItem(
+                              value: a,
+                                child: Text(a) );
+                          }).toList(),
+                          onChanged: (_value) => {
+                            setState((){
+                              _vista = _value.toString();
+                            }
+                            )
+                          },
+                        hint: Text(_vista),
+                      ),
                       SizedBox(
                         height: 20,
                       ),
                       Text(
-                        "Escuela ",
+                        "Foto de Perfil ",
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
+                          fontSize: 18.0,
+                        ),
+                      ),
+                      Text(
+                        "Seleccione una foto de su galería o tome una foto con su cámara. Recuerde que esta NO podrá ser modificada. ",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: ColorVino.vino[400],
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w700,
                           fontSize: 15.0,
                         ),
                       ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(ColorVino.vino),
-                        ),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            //barrierDismissible: false,
-                            builder: (context) =>AlertDialog(
-                              // Abrir la cámara o la galería
-                              title: const Text('Tomar fotografía o seleccionar imagen.'),
-                              content: Text('Selecciona una opción.'),
-                              actions: <Widget>[
-                                TextButton(
-                                  /* si se selecciona este botón, enviará a las configuraciones
+                      Container(
+                        alignment: Alignment.center,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(ColorVino.vino),
+                          ),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              //barrierDismissible: false,
+                              builder: (context) =>AlertDialog(
+                                // Abrir la cámara o la galería
+                                title: const Text('Tomar fotografía o seleccionar imagen.'),
+                                content: Text('Selecciona una opción.'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    /* si se selecciona este botón, enviará a las configuraciones
                                  * del dispositivo para que el usuario dé el accesso a la
                                  * ubicación de forma manual */
-                                    child: const Text('Tomar Fotografía con la cámara'),
-                                    onPressed: (){
-                                      picWithCamera();
-                                      //llama a la función de tomar foto
-                                      Navigator.pop(context);
-                                    }
-                                ),
-                                TextButton(
-                                  //Si se selecciona este botón, la aplicación se cerrará
-                                  child: const Text('Seleccionar imagen de la galería'),
-                                  onPressed: () {
-                                    selectFromGallery();
-                                    Navigator.pop(context);//llama a la función de seleccionar de la galería
-                                  },
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                        child: const Text('Tomar foto ó seleccionar archivo'),
+                                      child: const Text('Tomar Fotografía con la cámara'),
+                                      onPressed: (){
+                                        picWithCameraImgProfile();
+                                        //llama a la función de tomar foto
+                                        Navigator.pop(context);
+                                      }
+                                  ),
+                                  TextButton(
+                                    //Si se selecciona este botón, la aplicación se cerrará
+                                    child: const Text('Seleccionar imagen de la galería'),
+                                    onPressed: () {
+                                      selectFromGalleryImgProfile();
+                                      Navigator.pop(context);//llama a la función de seleccionar de la galería
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                          child: const Text('Tomar foto ó seleccionar archivo'),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "Foto de Perfil ",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18.0,
+                        ),
+                      ),
+                      Text(
+                        "Tome una foto del código QR que se encuentra al reverso de tu credencial. procure buena iluminación",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: ColorVino.vino[400],
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 15.0,
+                        ),
+                      ),
+                      Container(//TODO: reparar acciones de este botón
+                        alignment: Alignment.center,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(ColorVino.vino),
+                          ),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) =>AlertDialog(
+                                // Abrir la cámara o la galería
+                                title: const Text('Tomar fotografía o seleccionar imagen.'),
+                                content: Text('Selecciona una opción.'),
+                                actions: <Widget>[
+                                  TextButton(
+                                      child: const Text('Tomar Fotografía con la cámara'),
+                                      onPressed: (){
+                                        picWithCameraImgProfile();
+                                        Navigator.pop(context);
+                                      }
+                                  ),
+                                  TextButton(
+                                    child: const Text('Seleccionar imagen de la galería'),
+                                    onPressed: () {
+                                      selectFromGalleryImgProfile();
+                                      Navigator.pop(context);//llama a la función de seleccionar de la galería
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                          child: const Text('Tomar foto ó seleccionar archivo'),
+                        ),
                       ),
                     ],
                   ),

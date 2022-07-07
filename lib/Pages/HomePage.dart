@@ -180,21 +180,8 @@ class HomePage extends StatelessWidget{
                             context,
                             MaterialPageRoute(builder: (context) => SignUpScreen(title: 'IPN',)),
                           );
-                          /* Cuando el botón se presiona porprimera vez,
-                       * muestra por pantalla la alerta que pide permiso para
-                       * acceder a la ubicación (sig línea de código) [...] */
                           final status = await Permission.location.request();
                           if(status == PermissionStatus.granted){
-                            /* [...] Si el permiso se concede, navegará  a la
-                         * pantalla de inicio de sesión, permitiendo al
-                         * usuario ingresar sus datos */
-
-                            /*
-                         Enviar Alerta de que no se pudo Acceder a la
-                         ubicación, si en la alerta, se acepta el
-                         uso de la ubicación, enviará al ususario a la config
-                         para que permita el acceso a la ubicación manualmente
-                         */
                           }
                         }
                     ),
