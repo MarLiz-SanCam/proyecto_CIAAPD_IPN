@@ -149,7 +149,6 @@ class HomePage extends StatelessWidget{
                         minWidth: 170.0,
                         splashColor: Colors.transparent,
                         onPressed: () async {
-                          //TODO mandar a la página LogInScreen
                           Navigator.push( //Navega a la siguiente página.
                             context,
                             MaterialPageRoute(builder: (context) => LogInScreen()),
