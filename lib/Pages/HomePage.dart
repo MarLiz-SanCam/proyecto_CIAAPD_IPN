@@ -2,9 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_app_asistencia_ipn/Colors/ColorVino.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:proyecto_app_asistencia_ipn/Pages/LogInPresencial.dart';
-import 'package:proyecto_app_asistencia_ipn/Pages/LogInDistancia.dart';
 import 'package:proyecto_app_asistencia_ipn/Pages/LogInScreen.dart';
+import 'package:proyecto_app_asistencia_ipn/Pages/SingUpScreen.dart';
 // --------------------------  Fin de los 'import' -------------------------- //
 
 // Página principal de la aplicación.
@@ -179,7 +178,7 @@ class HomePage extends StatelessWidget{
                           //TODO Mandaar a La página SignUpScreen
                           Navigator.push( //Navega a la siguiente página.
                             context,
-                            MaterialPageRoute(builder: (context) => LogInADistancia(title: 'IPN',)),
+                            MaterialPageRoute(builder: (context) => SignUpScreen()),
                           );
                           /* Cuando el botón se presiona porprimera vez,
                        * muestra por pantalla la alerta que pide permiso para
